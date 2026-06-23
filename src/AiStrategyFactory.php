@@ -19,7 +19,7 @@ use Psr\SimpleCache\CacheInterface;
 
 /**
  * Builds the AI strategy ONLY when the optional gawrys/counterparty-ai package is present
- * (conditional wiring — there is no separate "-ai-laravel" package). The application must
+ * (conditional wiring - there is no separate "-ai-laravel" package). The application must
  * bind an {@see AiResearchProvider} (the SDK adapter).
  */
 final class AiStrategyFactory

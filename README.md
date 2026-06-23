@@ -14,11 +14,11 @@ auto-wired service provider, a facade, validation rules, a queued job and an eve
 
 ## Features
 
-- **Zero-config auto-discovery** — PSR contracts mapped onto Laravel's HTTP client, cache
+- **Zero-config auto-discovery** - PSR contracts mapped onto Laravel's HTTP client, cache
   and log; reference registries and checks registered for you.
-- **Facade** — `Counterparty::verify()` and Storage-style `Counterparty::extendRegistry()`.
-- **Validation rules** — `ActiveVatPayer`, `NotSanctioned`.
-- **Async** — queued `VerifyCounterparty` job dispatching a `CounterpartyFlagged` event.
+- **Facade** - `Counterparty::verify()` and Storage-style `Counterparty::extendRegistry()`.
+- **Validation rules** - `ActiveVatPayer`, `NotSanctioned`.
+- **Async** - queued `VerifyCounterparty` job dispatching a `CounterpartyFlagged` event.
 - **Selectable strategy & sanctions provider** via published config; conditional AI wiring.
 
 ## Installation
@@ -59,7 +59,7 @@ Async:
 ```
 
 Set `COUNTERPARTY_STRATEGY=ai` (and install `gawrys/counterparty-ai` + bind an
-`AiResearchProvider`) to switch to advisory AI scoring — wiring is conditional on the
+`AiResearchProvider`) to switch to advisory AI scoring - wiring is conditional on the
 package being present.
 
 Full guide: **[documentation](https://igorgawrys1.github.io/counterparty-verification/laravel/)**.
@@ -76,7 +76,7 @@ See [CHANGELOG.md](CHANGELOG.md).
 
 ## Contributing & Security
 
-Pull requests welcome. Report security issues privately — see [SECURITY.md](SECURITY.md).
+Pull requests welcome. Report security issues privately - see [SECURITY.md](SECURITY.md).
 
 ## Credits
 

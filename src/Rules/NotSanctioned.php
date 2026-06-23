@@ -12,7 +12,7 @@ use Illuminate\Contracts\Validation\ValidationRule;
 
 /**
  * Validates that the named entity raises no sanctions match. A match is advisory grounds
- * to block onboarding pending human review — never an automated legal determination.
+ * to block onboarding pending human review - never an automated legal determination.
  */
 final class NotSanctioned implements ValidationRule
 {
