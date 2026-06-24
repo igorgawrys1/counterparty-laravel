@@ -38,10 +38,13 @@ use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Log\LoggerInterface;
 
 /**
- * Wires the toolkit into Laravel: maps PSR contracts onto Laravel's HTTP client, cache and
- * log, registers the reference registries/checks, selects the risk strategy from config,
- * and binds the {@see CounterpartyManager} behind the facade. AI wiring is conditional on
- * the optional package being installed.
+ * Wires the toolkit into Laravel: binds the PSR-20 clock and resolves the PSR-3 logger,
+ * registers the reference registries/checks, selects the risk strategy and sanctions
+ * provider from config, and binds the {@see CounterpartyManager} behind the facade.
+ *
+ * The host application provides the PSR-18 client + PSR-17 factories (e.g. symfony/http-client
+ * or a Guzzle PSR-18 adapter), and a PSR-16 cache when the AI strategy is enabled. AI wiring
+ * is conditional on the optional gawrys/counterparty-ai package being installed.
  */
 final class CounterpartyServiceProvider extends ServiceProvider
 {
@@ -157,7 +160,11 @@ final class CounterpartyServiceProvider extends ServiceProvider
     private function buildRiskStrategy(Container $app): RiskStrategy
     {
         if ($this->stringConfig('counterparty.strategy') === 'ai') {
-            return AiStrategyFactory::make($app, $this->floatConfig('counterparty.ai.review_threshold', 0.6));
+            return AiStrategyFactory::make(
+                $app,
+                $this->floatConfig('counterparty.ai.review_threshold', 0.6),
+                $this->intConfig('counterparty.ai.cache_ttl', 86400),
+            );
         }
 
         return RuleBasedRiskStrategy::withDefaultRules($this->floatConfig('counterparty.review_threshold', 0.5));
@@ -195,5 +202,12 @@ final class CounterpartyServiceProvider extends ServiceProvider
         $value = $this->app->make('config')->get($key);
 
         return \is_int($value) || \is_float($value) ? (float) $value : $default;
+    }
+
+    private function intConfig(string $key, int $default): int
+    {
+        $value = $this->app->make('config')->get($key);
+
+        return \is_int($value) ? $value : $default;
     }
 }

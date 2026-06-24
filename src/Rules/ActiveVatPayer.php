@@ -5,20 +5,24 @@ declare(strict_types=1);
 namespace Gawrys\Counterparty\Laravel\Rules;
 
 use Closure;
+use Gawrys\Counterparty\Adapter\WhiteList\WhiteListClient;
+use Gawrys\Counterparty\Check\WhiteListCheck;
 use Gawrys\Counterparty\Counterparty;
 use Gawrys\Counterparty\Enum\CheckStatus;
-use Gawrys\Counterparty\Laravel\CounterpartyManager;
-use Gawrys\Counterparty\Report\Source;
 use Illuminate\Contracts\Validation\ValidationRule;
+use Psr\Clock\ClockInterface;
 
 /**
  * Validates that a Polish NIP belongs to an active VAT payer (PL White List).
+ *
+ * Runs ONLY the White List check (one HTTP call), not the full verification suite, so a
+ * form validation does not trigger VIES/sanctions/registry lookups.
  *
  * Reminder: this is a due-diligence aid, not a guarantee of AML compliance.
  */
 final class ActiveVatPayer implements ValidationRule
 {
-    public function __construct(private readonly ?CounterpartyManager $manager = null)
+    public function __construct(private readonly ?WhiteListCheck $check = null)
     {
     }
 
@@ -30,13 +34,11 @@ final class ActiveVatPayer implements ValidationRule
             return;
         }
 
-        $manager = $this->manager ?? app(CounterpartyManager::class);
-        $outcome = $manager->verify(new Counterparty($value, 'PL', nip: $value));
+        $check = $this->check ?? new WhiteListCheck(app(WhiteListClient::class), app(ClockInterface::class));
+        $counterparty = new Counterparty($value, 'PL', nip: $value);
 
-        foreach ($outcome->report->fromSource(Source::WHITE_LIST) as $result) {
-            if ($result->status === CheckStatus::Pass) {
-                return;
-            }
+        if ($check->supports($counterparty) && $check->run($counterparty)->status === CheckStatus::Pass) {
+            return;
         }
 
         $fail('The :attribute is not registered as an active VAT payer.')->translate();

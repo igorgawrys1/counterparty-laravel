@@ -39,7 +39,7 @@ use Gawrys\Counterparty\Counterparty as Subject;
 
 $outcome = Counterparty::verify(new Subject('Acme', 'PL', nip: '1234567890'));
 
-Counterparty::extendRegistry('de', fn ($cfg) => new GermanRegistryDriver($cfg['api_key']));
+Counterparty::extendRegistry('de', fn () => new GermanRegistryDriver(app(JsonHttpClient::class)));
 ```
 
 Validation:

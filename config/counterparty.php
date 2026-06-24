@@ -18,12 +18,11 @@ return [
     |--------------------------------------------------------------------------
     | Registries (per-country drivers), declared like filesystem "disks"
     |--------------------------------------------------------------------------
-    | Each entry maps a driver name to its config. Reference drivers are wired
-    | automatically; add your own via Counterparty::extendRegistry() or here.
+    | Toggle the capability-routed PL registry drivers. (The White List and VIES
+    | checks are always wired and are not listed here.) Add your own via
+    | Counterparty::extendRegistry().
     */
     'registries' => [
-        'pl_white_list' => ['enabled' => true],
-        'vies' => ['enabled' => true],
         'krs' => ['enabled' => true, 'base_uri' => null],
         'ceidg' => ['enabled' => false, 'token' => env('CEIDG_TOKEN')],
         'regon' => ['enabled' => false, 'token' => env('REGON_TOKEN')],

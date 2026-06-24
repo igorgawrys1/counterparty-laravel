@@ -24,7 +24,7 @@ use Psr\SimpleCache\CacheInterface;
  */
 final class AiStrategyFactory
 {
-    public static function make(Container $app, float $reviewThreshold): RiskStrategy
+    public static function make(Container $app, float $reviewThreshold, int $cacheTtl = 86400): RiskStrategy
     {
         if (!class_exists(AiRiskStrategy::class)) {
             throw new \RuntimeException(
@@ -47,6 +47,7 @@ final class AiStrategyFactory
             $app->make(CacheInterface::class),
             $app->make(LoggerInterface::class),
             $reviewThreshold,
+            $cacheTtl,
         );
     }
 }
