@@ -29,6 +29,8 @@ use Gawrys\Counterparty\Risk\RuleBasedRiskStrategy;
 use Gawrys\Counterparty\Sanctions\SanctionsManager;
 use Gawrys\Counterparty\Sanctions\SanctionsProvider;
 use Gawrys\Counterparty\Verifier;
+use Http\Discovery\Psr17FactoryDiscovery;
+use Http\Discovery\Psr18ClientDiscovery;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\ServiceProvider;
 use Psr\Clock\ClockInterface;
@@ -53,6 +55,14 @@ final class CounterpartyServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__ . '/../config/counterparty.php', 'counterparty');
 
         $this->app->bind(ClockInterface::class, SystemClock::class);
+
+        // Zero-config defaults: discover an installed PSR-18 client + PSR-17 factories. On a
+        // stock Laravel app this finds the bundled Guzzle (Guzzle 7 is a PSR-18 client and
+        // guzzlehttp/psr7 provides the factories) - no extra packages required. bindIf() means
+        // an application binding always takes precedence.
+        $this->app->bindIf(ClientInterface::class, static fn (): ClientInterface => Psr18ClientDiscovery::find());
+        $this->app->bindIf(RequestFactoryInterface::class, static fn (): RequestFactoryInterface => Psr17FactoryDiscovery::findRequestFactory());
+        $this->app->bindIf(StreamFactoryInterface::class, static fn (): StreamFactoryInterface => Psr17FactoryDiscovery::findStreamFactory());
 
         $this->app->singleton(JsonHttpClient::class, static fn (Container $app): JsonHttpClient => new JsonHttpClient(
             $app->make(ClientInterface::class),

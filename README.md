@@ -28,8 +28,10 @@ composer require gawrys/counterparty-laravel
 php artisan vendor:publish --tag=counterparty-config
 ```
 
-Bind a PSR-18 client + PSR-17 factories in your app (e.g. `symfony/http-client`'s
-`Psr18Client`, or a Guzzle PSR-18 adapter).
+**Zero-config HTTP.** The provider auto-discovers an installed PSR-18 client + PSR-17
+factories - on a stock Laravel app this uses the bundled **Guzzle** (Guzzle 7 is a PSR-18
+client), so you don't have to install or wire anything. To use a different client, just bind
+`Psr\Http\Client\ClientInterface` (and the PSR-17 factories) in your app - your binding wins.
 
 ## Usage
 
