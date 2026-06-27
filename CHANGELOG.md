@@ -3,6 +3,12 @@
 All notable changes are documented here, following [Keep a Changelog](https://keepachangelog.com/)
 and [Semantic Versioning](https://semver.org/).
 
+## [0.1.2]
+
+### Changed
+- Allow `orchestra/testbench ^10` (Laravel 12) in dev so CI can resolve a `laravel/framework`
+  release not blocked by Composer's security-advisory policy.
+
 ## [0.1.1]
 
 ### Added
