@@ -1,5 +1,7 @@
 # Counterparty for Laravel
 
+[![Packagist Version](https://img.shields.io/packagist/v/gawrys/counterparty-laravel.svg)](https://packagist.org/packages/gawrys/counterparty-laravel)
+[![Total Downloads](https://img.shields.io/packagist/dt/gawrys/counterparty-laravel.svg)](https://packagist.org/packages/gawrys/counterparty-laravel)
 [![CI](https://github.com/igorgawrys1/counterparty-laravel/actions/workflows/ci.yml/badge.svg)](https://github.com/igorgawrys1/counterparty-laravel/actions/workflows/ci.yml)
 [![PHP](https://img.shields.io/badge/php-8.2%20|%208.3%20|%208.4-777bb4.svg)](https://www.php.net/)
 [![Laravel](https://img.shields.io/badge/laravel-11%20|%2012-ff2d20.svg)](https://laravel.com/)

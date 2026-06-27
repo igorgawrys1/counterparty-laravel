@@ -21,12 +21,7 @@ jobs:
           coverage: none
           tools: composer:v2
       - run: composer validate --strict
-      # counterparty-core / -ai are pulled from their (currently private) GitHub repos until
-      # published to Packagist; provide a COMPOSER_AUTH secret:
-      # {"github-oauth":{"github.com":"<token>"}}.
       - run: composer install --no-interaction --no-progress --prefer-dist
-        env:
-          COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
       - run: composer cs:check
       - run: composer stan
       - run: composer test

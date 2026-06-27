@@ -3,6 +3,13 @@
 All notable changes are documented here, following [Keep a Changelog](https://keepachangelog.com/)
 and [Semantic Versioning](https://semver.org/).
 
+## [0.1.3]
+
+### Changed
+- Published on Packagist; `gawrys/counterparty-core` and `gawrys/counterparty-ai` now resolve
+  from Packagist (dropped the `repositories: vcs` entries and the CI `COMPOSER_AUTH` step).
+- README: Packagist badges.
+
 ## [0.1.2]
 
 ### Changed

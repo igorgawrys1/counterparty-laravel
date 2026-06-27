@@ -10,16 +10,6 @@
             "email": "igor@fikg.pl"
         }
     ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/igorgawrys1/counterparty-core"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/igorgawrys1/counterparty-ai"
-        }
-    ],
     "require": {
         "php": ">=8.2",
         "gawrys/counterparty-core": "^0.1",
