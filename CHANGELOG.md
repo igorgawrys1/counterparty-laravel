@@ -3,6 +3,12 @@
 All notable changes are documented here, following [Keep a Changelog](https://keepachangelog.com/)
 and [Semantic Versioning](https://semver.org/).
 
+## [0.1.5]
+
+### Added
+- Support for **Laravel 13** (`illuminate/*` `^13.0`, `orchestra/testbench` `^11.0`).
+  Composer resolves Laravel 11/12/13 per PHP version; Laravel 13 requires PHP 8.3+.
+
 ## [0.1.4]
 
 ### Changed
